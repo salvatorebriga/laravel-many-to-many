@@ -4,8 +4,13 @@
 
 @section('content')
   <div class="container">
-    <h1 class="py-4">Projects</h1>
 
+    <div class="header-page py-4 d-flex justify-content-between align-items-center">
+      <h1>Projects</h1>
+      <div>
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Add New Project</a>
+      </div>
+    </div>
 
     <table class="table">
       <thead>
@@ -19,21 +24,21 @@
       <tbody>
         @foreach ($projects as $project)
           <tr>
-            <th scope="row" class="col">{{ $project->id }}</th>
-            <td class="col-2">{{ $project->name }}</td>
-            <td class="col-8">{{ $project->description }}</td>
-            <td class="col">
-              <div class="btn-group" role="group" aria-label="Project Actions">
-                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary" role="button">
+            <td>{{ $project->id }}</td>
+            <td>{{ $project->name }}</td>
+            <td>{{ $project->description }}</td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary btn-sm mr-1">
                   <i class="fas fa-pencil"></i>
                 </a>
-                <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-warning" role="button">
+                <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-warning btn-sm mr-1">
                   <i class="fas fa-search"></i>
                 </a>
-                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="d-inline">
+                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-danger"
+                  <button type="submit" class="btn btn-danger btn-sm"
                     onclick="return confirm('Are you sure you want to delete this project?')">
                     <i class="fas fa-trash-alt"></i>
                   </button>
