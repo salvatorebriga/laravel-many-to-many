@@ -24,9 +24,20 @@
             <td class="col-8">{{ $project->description }}</td>
             <td class="col">
               <div class="btn-group" role="group" aria-label="Project Actions">
-                <button class="btn btn-primary"><i class="fas fa-pencil"></i></button>
-                <button class="btn btn-warning"><i class="fas fa-search"></i></button>
-                <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary" role="button">
+                  <i class="fas fa-pencil"></i>
+                </a>
+                <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-warning" role="button">
+                  <i class="fas fa-search"></i>
+                </a>
+                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="d-inline">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this project?')">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
               </div>
             </td>
           </tr>
