@@ -15,9 +15,10 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">id</th>
-          <th scope="col">name</th>
-          <th scope="col">description</th>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Categories</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -27,6 +28,7 @@
             <td>{{ $project->id }}</td>
             <td>{{ $project->name }}</td>
             <td>{{ $project->description }}</td>
+            <td>{{ $project->category->name ?? 'N/A' }}</td>
             <td>
               <div class="d-flex justify-content-end">
                 <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary btn-sm mr-1">
