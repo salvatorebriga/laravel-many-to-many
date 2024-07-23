@@ -58,7 +58,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $categories = Category::all();
+        return view('admin.projects.edit', compact('project', 'categories'));
     }
 
     /**
@@ -67,8 +68,14 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $validated = $request->validated();
-        $project->update($validated);
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
+
+        $project->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'category_id' => $validated['category_id'],
+        ]);
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully!');
     }
 
     /**
