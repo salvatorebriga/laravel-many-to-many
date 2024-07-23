@@ -29,14 +29,22 @@
             <td class="col-1">{{ $category->id }}</td>
             <td class="col-9">{{ $category->name }}</td>
             <td>
-              <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary btn-sm">Edit</a>
-              <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
-                style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm"
-                  onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-              </form>
+              <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary btn-sm mr-1">
+                  <i class="fas fa-pencil"></i>
+                </a>
+                <a href="{{ route('admin.categories.show', $category->id) }}" class="btn btn-warning btn-sm mr-1">
+                  <i class="fas fa-search"></i>
+                </a>
+                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Are you sure you want to delete this category?')">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
         @endforeach
