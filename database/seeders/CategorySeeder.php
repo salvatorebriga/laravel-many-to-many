@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Full Stack', 'Front End', 'Back End', 'Compiled', 'Assembly'];
+        $categories = ['Full-Stack', 'Front-End', 'Back-End', 'Compiled', 'Assembly'];
 
         foreach ($categories as $category) {
             Category::create(['name' => $category]);
