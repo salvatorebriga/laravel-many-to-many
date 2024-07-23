@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Category;
 
 class ProjectController extends Controller
 {
@@ -23,7 +24,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $categories = Category::all();
+        return view('admin.projects.create', compact('categories'));
     }
 
     /**
@@ -31,9 +33,16 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+
         $validated = $request->validated();
-        Project::create($validated);
-        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
+
+        Project::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'category_id' => $validated['category_id'],
+        ]);
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully!');
     }
 
     /**
