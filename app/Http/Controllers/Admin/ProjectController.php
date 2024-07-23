@@ -15,7 +15,6 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -32,17 +31,9 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        Project::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully!');
+        $validated = $request->validated();
+        Project::create($validated);
+        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
     /**
@@ -66,17 +57,9 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        $project->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully');
+        $validated = $request->validated();
+        $project->update($validated);
+        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
     /**
@@ -85,8 +68,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-
-        return redirect()->route('admin.projects.index')
-            ->with('success', 'Project deleted successfully');
+        return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
     }
 }
