@@ -1,0 +1,46 @@
+@extends('layouts.app')
+
+@section('content')
+  <div class="container">
+    <header class="d-flex justify-content-between align-items-center">
+      <h1 class="py-4">Categories</h1>
+      <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
+    </header>
+
+
+
+    @if (session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
+    @endif
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($categories as $category)
+          <tr>
+            <td class="col-1">{{ $category->id }}</td>
+            <td class="col-9">{{ $category->name }}</td>
+            <td>
+              <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary btn-sm">Edit</a>
+              <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
+                style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm"
+                  onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+              </form>
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+@endsection
