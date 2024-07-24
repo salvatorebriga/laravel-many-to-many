@@ -57,6 +57,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('/admin/categories') }}">{{ __('Categories') }}</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url('/admin/technologies') }}">{{ __('Technologies') }}</a>
+                </li>
               @endauth
             </ul>
 
