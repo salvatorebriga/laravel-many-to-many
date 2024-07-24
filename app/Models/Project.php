@@ -15,11 +15,13 @@ class Project extends Model
         'category_id',
     ];
 
-    /**
-     * Get the category that owns the project.
-     */
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class, 'project_technology');
     }
 }
