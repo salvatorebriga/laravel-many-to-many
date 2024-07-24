@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +27,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('projects', ProjectController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('technologies', TechnologyController::class);
 });
 
 Route::middleware('auth')->group(function () {
