@@ -25,19 +25,32 @@
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="5">{{ $project->description }}</textarea>
+        <textarea class="form-control" id="description" name="description" rows="3">{{ $project->description }}</textarea>
       </div>
 
       <div class="mb-3">
         <label for="category_id" class="form-label">Category</label>
-        <select class="form-control" id="category_id" name="category_id" required>
-          <option value="">Select a category</option>
+        <select class="form-control" id="category_id" name="category_id">
+          <option value="">Select Category</option>
           @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ $project->category_id == $category->id ? 'selected' : '' }}>
+            <option value="{{ $category->id }}" {{ $category->id == $project->category_id ? 'selected' : '' }}>
               {{ $category->name }}
             </option>
           @endforeach
         </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Technologies</label><br>
+        @foreach ($technologies as $technology)
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="technologies[]" id="technology_{{ $technology->id }}"
+              value="{{ $technology->id }}" {{ $project->technologies->contains($technology->id) ? 'checked' : '' }}>
+            <label class="form-check-label" for="technology_{{ $technology->id }}">
+              {{ $technology->name }}
+            </label>
+          </div>
+        @endforeach
       </div>
 
       <button type="submit" class="btn btn-primary">Update Project</button>
