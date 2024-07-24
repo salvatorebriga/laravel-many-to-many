@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Category;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -15,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('category')->get();
+        $projects = Project::with('category', 'technologies')->get();
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -25,7 +26,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.projects.create', compact('categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -33,14 +35,18 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-
         $validated = $request->validated();
 
-        Project::create([
+        $project = Project::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'category_id' => $validated['category_id'],
         ]);
+
+        // Sincronizza le tecnologie selezionate
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->input('technologies'));
+        }
 
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully!');
     }
@@ -59,7 +65,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        return view('admin.projects.edit', compact('project', 'categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -74,6 +81,11 @@ class ProjectController extends Controller
             'description' => $validated['description'],
             'category_id' => $validated['category_id'],
         ]);
+
+        // Sincronizza le tecnologie selezionate
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->input('technologies'));
+        }
 
         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully!');
     }
